@@ -38,10 +38,11 @@ public class Database {
 	 * Initialise la requête préparée basée sur la connexion passée en argument,
 	 * avec la requête SQL et les objets donnés.
 	 */
-	public PreparedStatement initialisationRequetePreparee(Connection connexion, String requete,
-			boolean returnGeneratedKeys, Object... objets) throws SQLException {
-		PreparedStatement preparedStatement = connexion.prepareStatement(requete,
-				returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+	public PreparedStatement initialisationRequetePreparee(Connection connexion, String requete, boolean returnGeneratedKeys, Object... objets) throws SQLException {
+		
+		
+		PreparedStatement preparedStatement = connexion.prepareStatement(requete,returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+		
 		for (int i = 0; i < objets.length; i++) {
 			preparedStatement.setObject(i + 1, objets[i]);
 		}
