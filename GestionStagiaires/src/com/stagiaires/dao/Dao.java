@@ -29,7 +29,7 @@ public abstract class Dao<T> {
 	public abstract List<T> list();
 
 	// Permet de créer une entrée dans la base de données par rapport à un objet
-	public abstract T insert(T obj);
+	public abstract T insert(T obj);  
 
 	// Permet de mettre à jour les données d'une entrée dans la base
 	public abstract void update(T obj);
@@ -75,13 +75,13 @@ public abstract class Dao<T> {
 		}
 		return businessObjectList;
 	}
-
+	
 	protected int insert(String requete, Object... objets) 
 	 { 
 	 try { 
 	 connection = db.getConnection(); 
 	 preparedStatement = db.initialisationRequetePreparee( 
-	connection, requete, true, objets ); 
+	 connection, requete, true, objets ); 
 	 int statut = preparedStatement.executeUpdate(); 
 	 if ( statut == 0 ) { 
 	 throw new DaoException(String.format("Échec de la création dans la table %s", tableName)); 

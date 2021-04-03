@@ -7,6 +7,8 @@ public class Stagiaire {
 	private Ville ville;
 	private int id_groupe;
 	
+	
+	
 	public Stagiaire() {
 		super();
 	}
@@ -59,6 +61,9 @@ public class Stagiaire {
 		this.id_groupe = id_groupe;
 	}
 
+	public void eat() {
+		System.out.println("i eat everyday");
+	}
 	
 	@Override
 	public String toString() {

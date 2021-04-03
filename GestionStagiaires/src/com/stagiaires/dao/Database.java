@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Database {
+	
 	private String url;
 	private String userName;
 	private String password;

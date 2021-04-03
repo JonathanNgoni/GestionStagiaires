@@ -29,9 +29,11 @@ public class VilleDao  extends Dao<Ville> {
 		 String requete = String.format("INSERT INTO %s (nom)" + 
 		 " VALUES(?)", TABLE_NAME); 
 		 
-		 obj.setIdVille(insert(requete
-		 , obj.getNom())); 
-		 return obj; 
+		 obj.setIdVille(insert(requete, obj.getNom())); 
+		 return obj;
+		 
+		 
+		 
 		 }  @Override
 		 public void update(Ville obj) { 
 		 String requete = String.format("UPDATE %s SET " + 
@@ -44,7 +46,7 @@ public class VilleDao  extends Dao<Ville> {
 		 } 
 		 @Override
 		 public void delete(Ville obj) { 
-		 String requete = String.format("DELETE FROM %s WHERE idVille = ?", 
+		 String requete = String.format("DELETE  FROM %s WHERE idVille = ?",  
 		TABLE_NAME); 
 		 delete(requete, obj.getIdVille()); 
 		 } 

@@ -10,9 +10,8 @@ public class Ville {
 	 } 
 	 
 	
-	public Ville(int idVille, String nom) { 
+	public Ville( String nom) { 
 	 super(); 
-	 this.idVille = idVille; 
 	 this.nom = nom; 
 	 } 
 	
