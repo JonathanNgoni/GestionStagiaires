@@ -13,13 +13,10 @@ public class Groupe {
 		super();
 	}
 
-	public Groupe(int idGroup, String nom, Date dateDebut, Date dateDebutStage, Date dateFin) {
+	public Groupe(String nom) {
 		super();
-		this.idGroup = idGroup;
 		this.nom = nom;
-		DateDebut = dateDebut;
-		DateDebutStage = dateDebutStage;
-		DateFin = dateFin;
+		
 	}
 
 	public int getIdGroup() {

@@ -76,6 +76,28 @@ public abstract class Dao<T> {
 		return businessObjectList;
 	}
 	
+	
+	
+	protected List<T> getListOnQuery1(String requete, int id) {
+		List<T> businessObjectList = new ArrayList<T>();
+		try {
+			connection = db.getConnection();
+			preparedStatement = db.initialisationRequetePreparee(connection, requete, false, id);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				T businessObject = load(resultSet);
+				businessObjectList.add(businessObject);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			db.close(resultSet, preparedStatement, connection);
+		}
+		return businessObjectList;
+	}
+	
+	
+	
 	protected int insert(String requete, Object... objets) 
 	 { 
 	 try { 

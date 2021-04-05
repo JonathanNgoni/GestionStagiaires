@@ -4,7 +4,7 @@ public class Stagiaire {
 	private int ID;
 	private String prenom;
 	private String nom;
-	private Ville ville;
+	private int ville;
 	private int id_groupe;
 	
 	
@@ -13,11 +13,12 @@ public class Stagiaire {
 		super();
 	}
 
-	public Stagiaire( String prenom, String nom, Ville ville) {
+	public Stagiaire( String prenom, String nom, int ville, int id_groupe) {
 		super();
 		this.prenom = prenom;
 		this.nom = nom;
 		this.ville = ville;
+		this.id_groupe = id_groupe;
 
 	}
 
@@ -45,11 +46,11 @@ public class Stagiaire {
 		this.nom = nom;
 	}
 
-	public Ville getVille() {
+	public int getVille() {
 		return ville;
 	}
 
-	public void setVille(Ville ville) {
+	public void setVille(int ville) {
 		this.ville = ville;
 	}
 

@@ -16,7 +16,7 @@ public class StagiaireDao extends Dao<Stagiaire> {
 	 
 	 @Override
 	 public Stagiaire find(long id) { 
-	 String requete = String.format("SELECT * FROM %s WHERE idGroupe = ?", TABLE_NAME); 
+	 String requete = String.format("SELECT * FROM %s WHERE idStagiaire = ?", TABLE_NAME); 
 	 return getItemOnQuery(requete, id); 
 	 } 
 	 
@@ -25,13 +25,19 @@ public class StagiaireDao extends Dao<Stagiaire> {
 	 String requete = String.format("SELECT * FROM %s", TABLE_NAME); 
 	 return getListOnQuery(requete); 
 	 } 
+	 
+	
+	 public List<Stagiaire> listStagiaire(int idG) { 
+		 String requete = String.format("SELECT * FROM %s where idGroupe = ?", TABLE_NAME); 
+		 return getListOnQuery1(requete, idG); 
+		 } 
+	 
 	 @Override
 	 public Stagiaire insert(Stagiaire obj) { 
-	 String requete = String.format("INSERT INTO %s (nom)" + 
-	 " VALUES(?)", TABLE_NAME); 
+	 String requete = String.format("INSERT INTO %s (nom, prenom, idVille, idGroupe)" + 
+	 " VALUES(?,?,?,?)", TABLE_NAME); 
 	 
-	 obj.setID(insert(requete
-	 , obj.getNom())); 
+	 obj.setID(insert(requete, obj.getNom(), obj.getPrenom(),obj.getVille(),obj.getId_groupe())); 
 	 return obj; 
 	 
 	 }  @Override
@@ -39,24 +45,31 @@ public class StagiaireDao extends Dao<Stagiaire> {
 	 public void update(Stagiaire obj) { 
 	 String requete = String.format("UPDATE %s SET " + 
 	 " nom = ? " + 
-	 " WHERE idGroupe = ?", TABLE_NAME); 
+	 " WHERE idStagiaire = ?", TABLE_NAME); 
 	 
 	 update(requete
 	 , obj.getNom() 
 	 , obj.getID()); 
 	 } 
+	 
 	 @Override
 	 public void delete(Stagiaire obj) { 
-	 String requete = String.format("DELETE FROM %s WHERE idGroupe = ?", 
+	 String requete = String.format("DELETE FROM %s WHERE idStagiaire = ?", 
 	TABLE_NAME); 
 	 delete(requete, obj.getID()); 
 	 } 
+	 
+	 
+	 
 	 @Override
 	 public Stagiaire load(ResultSet resultSet) throws SQLException { 
 		 Stagiaire stagiaire = new Stagiaire(); 
 	 
-		 stagiaire.setID(resultSet.getInt("idGroupe")); 
-		 stagiaire.setNom(resultSet.getString("nom")); 
+		 stagiaire.setID(resultSet.getInt("idStagiaire")); 
+		 stagiaire.setNom(resultSet.getString("nom"));
+		 stagiaire.setPrenom(resultSet.getString("prenom")); 
+		 stagiaire.setVille(resultSet.getInt("idVille")); 
+		 stagiaire.setId_groupe(resultSet.getInt("idGroupe")); 
 	 return stagiaire; 
 	 }  }
 

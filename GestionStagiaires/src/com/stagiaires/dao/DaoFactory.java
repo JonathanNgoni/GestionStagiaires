@@ -18,6 +18,8 @@ public class DaoFactory {
 		return new StagiaireDao(db);
 		}
 	
-	
+	public GroupeDao getGroupeDao() {
+		return new GroupeDao(db);
+		}
 	}
 
