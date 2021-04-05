@@ -42,7 +42,7 @@ public class GroupeService {
 		return groupeDao.list();
 	}
 	
-	public List<Stagiaire> getAllSt(int id) {
+	public List<Stagiaire> getAllStagiairesParGroupe(int id) {
 		StagiaireDao stagiaireDao= daoFactory.getStagiaireDao();
 		return stagiaireDao.listStagiaire(id);
 	}
