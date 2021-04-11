@@ -27,9 +27,9 @@ public class StagiaireDao extends Dao<Stagiaire> {
 	 } 
 	 
 	
-	 public List<Stagiaire> listStagiaire(int idG) { 
+	 public List<Stagiaire> listStagiaire(int idGroupe) { 
 		 String requete = String.format("SELECT * FROM %s where idGroupe = ?", TABLE_NAME); 
-		 return getListOnQuery1(requete, idG); 
+		 return getListOnQuery1(requete, idGroupe); 
 		 } 
 	 
 	 @Override
