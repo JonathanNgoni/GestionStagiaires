@@ -26,7 +26,8 @@ public class GestionStagiairesClient {
     static int groupeID = 0;
      
 	public static void main(String[] args) throws IOException {
-		
+		System.out.println("######################## Bonjour Admin ! ########################################### ");
+		System.out.println();
 		testerGroupeEnBDD();
 
 		// recuperer le numero id de groupe choisi
@@ -68,21 +69,26 @@ public class GestionStagiairesClient {
 			}
 		}
 		ArrayList<Groupe> listeGroupesAjour = (ArrayList<Groupe>) groupeService.getAll();
-		System.out.println("########### Bonjour ! Voici les groupes de stagiaires actuellement enregistrés en base de données : #########");
-		
+		System.out.println(" Voici les groupes de stagiaires actuellement enregistrés en base de données :");
+		System.out.println("-----------------------------------------------------------------------------------------------------------------");
 		for (Groupe groupe : listeGroupesAjour) {
 			
            // for(int i =0; i<listeGroupesAjour.size(); i++ ) {
 	       // System.out.println(listeGroupesAjour.get(i).getIdGroup()+" "+listeGroupesAjour.get(i).getNom());
 			System.out.println(groupe.getIdGroup() + " " + groupe.getNom() + " Créé le  " +groupe.getDateDebut());
+			
 		}
-
+		System.out.println();
 		System.out.println("########### ###################  #########");
 		System.out.println(" A présent,  choisissez un numéro dans le menu qui s'affiche (ou tapez 0 pour sortir de cette application).");
 		System.out.println("--------------------------------------------------------------------");
 
 		groupeID = SelectionnerGroupe();
+		if(groupeID==0) {
+			exit();
+		}else {
 		getStagiairesParGroupe(groupeID);
+		}
 	}
 
 	
@@ -102,14 +108,24 @@ public class GestionStagiairesClient {
 		daoFactory = new DaoFactory(DatabaseFactory.createDatabase());
 
 		groupeService = new GroupeService(daoFactory);
+		
+		
 		switch (idGroupe) {
 		case 0:
 			exit();
 			break;
 		default:
+			Groupe testerIDgroupe = groupeService.getGroupeById(idGroupe);
+			if(testerIDgroupe != null) {
 			listeStagiaires = (ArrayList<Stagiaire>) groupeService.getAllStagiairesParGroupe(idGroupe);
-
+			}else {
+				System.out.println("------------------------------------------------------------------------------------------------------");
+				System.out.println(" Ce ID du  groupe n'exist pas en base de données, Veuillez saisir l'autre parmi les groupes qui s'affiche !");
+				testerGroupeEnBDD();
+			}
 		}
+		
+		
 		afficherStagiaires(listeStagiaires);
 	}
 
@@ -118,16 +134,24 @@ public class GestionStagiairesClient {
 	public static void afficherStagiaires(List<Stagiaire> listeStagiaires) throws IOException {
 		// tester si la liste est vide sinon afficher les stagiaires du groupe
 		if (listeStagiaires.size() != 0) {
-
+	     System.out.println("##########################################################################################");
 			// parcourir la liste et afficher les stagiaires du groupe
 			System.out.println("Voici la liste des stagiaires du groupe sélectionné");
+			System.out.println("-------------------------------------------------------------------------");
+			
 			for (Stagiaire stagiaire : listeStagiaires) {
-				System.out.println(stagiaire.getID() + " " + stagiaire.getNom() + " " + stagiaire.getPrenom() + " " + stagiaire.getVille()
-						+ " " + stagiaire.getId_groupe());
+				Ville villeStagiaire = villeService.getVilleById(stagiaire.getVille());
+				Groupe groupeStagiaire = groupeService.getGroupeById(stagiaire.getId_groupe());
+				System.out.println("Id :"+stagiaire.getID() + " Nom: " + stagiaire.getNom() + " Prenom:" + stagiaire.getPrenom() + "  Ville: " + villeStagiaire.getNom()
+						+ " Groupe: " + groupeStagiaire.getNom());
 			}
 		} else {
+			System.out.println();
 			System.out.println("Désolé, le groupe que vous avez choisi est vide !!");
 		}
+		
+		System.out.println();
+		
 		afficherOptions();
 	}
 
@@ -141,7 +165,6 @@ public class GestionStagiairesClient {
 
 		case 0:
 			exit();
-			
 			break;
 		case 1:
 			System.out.println("#############################################################################");
@@ -153,10 +176,12 @@ public class GestionStagiairesClient {
 					System.out.println(ville.getIdVille() + "  " + ville.getNom());
 				}
 			} else {
+				System.out.println("----------------------------------------------------------------------");
 				System.out.println("La liste est vide");
 			}
 			System.out.println("#############################################################################");
 			System.out.println("Voulez-vous ajouter une nouvelle ville ?  Saisir 0 pour l'ajouter sinon 1 pour continuer.");
+			System.out.println("----------------------------------------------------------------------");
 			int idNouvelleVille = sc.nextInt();
 			if (idNouvelleVille == 0) {
 				System.out.println("Saisir à présent le nom de la ville à ajouter en base de données.");
@@ -171,6 +196,14 @@ public class GestionStagiairesClient {
 			String prenom = sc.next();
 			System.out.println("Veuillez saisir l'id de la ville de résidence du stagiaire.");
 			int idVille = sc.nextInt();
+			
+			Ville testIDville = villeService.getVilleById(idVille);
+			if(testIDville ==  null) {
+				System.out.println("------------------------------------------------------------------------------------------------------");
+				System.out.println(" Ce ID du  ville  n'exist pas en base de données, Veuillez saisir l'autre parmi les ville qui s'affiche !");
+				GestionStagiaires(1);
+			}
+			
 			System.out.println("Veuillez saisir l'id du groupe auquel vous voulez affecter le stagiaire.");
 			groupeID = sc.nextInt();
 			Stagiaire newStagiaire = new Stagiaire(nom, prenom, idVille, groupeID);
@@ -191,7 +224,7 @@ public class GestionStagiairesClient {
 			}
 
 		case 3:
-			System.out.println("Les listes de groupe sont: ");
+			
 			GestionStagiairesClient.testerGroupeEnBDD();
 			break;
 		default:
@@ -200,18 +233,28 @@ public class GestionStagiairesClient {
 	}
 	
 	public static void afficherOptions() throws IOException {
-		System.out.println("Quelle opération voulez-vous effectuer maintenant ? Choisissez 1, 2 ou 3 parmi les choix suivants  : ");
-
+		System.out.println("##########################################################################################");
+		System.out.println("Quelle opération voulez-vous effectuer maintenant ? Choisissez 1, 2 , 3 ou 0 pout quitter parmi les choix suivants  : ");
+        System.out.println("---------------------------------------------------------------------------");
 		System.out.println("1 : ajouter un stagiaire");
 		System.out.println("2 : retirer un stagiaire du groupe");
 		System.out.println("3 : retour à la liste des groupes");
 		System.out.println("0 : quitter l'application");
+		
+		System.out.println("---------------------------------------------------------------------------");
 
 		int choixOption = sc.nextInt();
 		GestionStagiaires(choixOption);
 	}
 
 	public static void exit() {
-		System.out.println("Merci. Au revoir!");
+		System.out.println();
+		System.out.println("############################# Merci. Au revoir! ################################");
 	}
+	
+	
+		
+		
+		
+	
 }
