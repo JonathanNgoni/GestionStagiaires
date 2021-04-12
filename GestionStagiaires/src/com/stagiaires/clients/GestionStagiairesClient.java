@@ -183,7 +183,7 @@ public class GestionStagiairesClient {
 				Ville nouvelleVille = new Ville(nomVilleSaisi);
 				villeService.createVille(nouvelleVille);
 				GestionStagiaires(1);
-			}
+			}else {
 			System.out.println("Pour ajouter un nouveau stagiaire veuillez saisir son nom.");
 			String nom = sc.next();
 			System.out.println("Veuillez saisir le prénom du stagiaire.");
@@ -199,14 +199,14 @@ public class GestionStagiairesClient {
 						"Cet idVille n'existe pas en base de données : veuillez en choisir un autre svp.");
 				GestionStagiaires(1);
 				
-			}
+			}else {
 
 			System.out.println("Veuillez saisir l'id du groupe auquel vous voulez affecter le stagiaire.");
 			groupeID = sc.nextInt();
 			Stagiaire newStagiaire = new Stagiaire(nom, prenom, idVille, groupeID);
 			Stagiaire stagiaire = stagiaireService.createStagiaire(newStagiaire);
 			System.out.println("Bravo !" + stagiaire.getNom() + "  " + stagiaire.getPrenom()+ " est bien ajouté dans le groupe " + stagiaire.getId_groupe());
-			getStagiairesParGroupe(stagiaire.getId_groupe());
+			getStagiairesParGroupe(stagiaire.getId_groupe());}}
 			break;
 		case 2:
 			System.out.println("Veuillez saisir l'ID du stagiaire à supprimer.");
@@ -247,15 +247,17 @@ public class GestionStagiairesClient {
 		System.out.println("---------------------------------------------------------------------------");
 
 		int choixOption = sc.nextInt();
-		if(choixOption==0) {
+		if(choixOption!=0) {
+			
+		GestionStagiaires(choixOption);}
+		
+		else {
 			exit();
-		}else {
-		GestionStagiaires(choixOption);
 	}}
 ///fin
 	
 	
-////debut de methode
+/// début de la méthode
 	public static void exit() {
 		System.out.println();
 		System.out.println("############################# Merci. Au revoir! ################################");
