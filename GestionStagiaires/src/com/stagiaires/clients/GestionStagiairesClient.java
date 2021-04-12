@@ -25,9 +25,9 @@ public class GestionStagiairesClient {
 	static Scanner sc = new Scanner(System.in);
 	static int groupeID = 0;
 	
-	/////point d'entre du programme
+	///point d'entrée du programme"
 	public static void main(String[] args) throws IOException {
-		System.out.println("######################## Bonjour Admin ! ########################################### ");
+		System.out.println("######################## Cher(e) utilisateur(rice), bonjour ! ########################################### ");
 		System.out.println();
 		testerGroupeEnBDD();
 	}
@@ -140,7 +140,7 @@ public class GestionStagiairesClient {
 			}
 		} else {
 			System.out.println();
-			System.out.println("Désolé, le groupe que vous avez choisi est vide !!");
+			System.out.println(" Le groupe que vous avez choisi est vide !!");
 		}
 
 		System.out.println();
@@ -196,7 +196,7 @@ public class GestionStagiairesClient {
 				System.out.println(
 						"------------------------------------------------------------------------------------------------------");
 				System.out.println(
-						" Ce ID du  ville  n'existe pas en base de données. Veuillez saisir l'autre parmi les ville qui s'affiche !");
+						"Cet idVille n'existe pas en base de données : veuillez en choisir un autre svp.");
 				GestionStagiaires(1);
 				
 			}
@@ -234,7 +234,7 @@ public class GestionStagiairesClient {
 /////fin 
 	
 	
-////debut de la method
+	/// début de la méthode
 	public static void afficherOptions() throws IOException {
 		System.out.println("##########################################################################################");
 		System.out.println("Quelle opération voulez-vous effectuer maintenant ? Choisissez 1, 2 , 3 ou 0 pour quitter parmi les choix suivants  : ");
@@ -247,8 +247,11 @@ public class GestionStagiairesClient {
 		System.out.println("---------------------------------------------------------------------------");
 
 		int choixOption = sc.nextInt();
+		if(choixOption==0) {
+			exit();
+		}else {
 		GestionStagiaires(choixOption);
-	}
+	}}
 ///fin
 	
 	
